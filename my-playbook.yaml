@@ -5,7 +5,7 @@
   tasks:
   - name: Install nginx server
     apt:
-      name: nginx
+      name: nginx= 1.18.0-0ubuntu1
       state: latest
 
   - name: Start nginx server
@@ -13,4 +13,3 @@
       name: nginx
       state: started    
 
-      
