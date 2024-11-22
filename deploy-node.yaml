@@ -19,8 +19,8 @@
         name: ahmedalaa
         comment: ahmed admin
         group: admin
-
-
+      register: user_creation_result
+    - debug: msg={{user_creation_result}}
 
 
 - name: Deploy nodejs app
