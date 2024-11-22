@@ -11,25 +11,38 @@
         pkg:
           - nodejs
           - npm
+- name: Create new linux userfor node app 
+  hosts: 159.89.1.54
+  tasks:  
+    - name: Create linux user
+      user:
+        name: ahmedalaa
+        comment: ahmed admin
+        group: admin
+
+
+
 
 - name: Deploy nodejs app
   hosts: 159.89.1.54
+  become: True
+  become_user: ahmedalaa
   tasks:          
     - name: Copy nodejs folder to a server
       copy:
         src: /home/Documents/nodejs-app.tgz
-        dest: /home/ansible/nodejs.tgz
+        dest: /home/ahmedalaa/ansible/nodejs.tgz
     - name : Unpack the nodejs tar file
       unarchive:
         src: /home/ansible/nodejs.tgz
-        dest: /home/ansible/nodejs
+        dest: /home/ahmedalaa/ansible/nodejs
         reomote_src: yes
     - name: Install dependencies
       npm:
         path: /home/ansible/nodejs/package
     - name: Start the application
       command:
-        chdir: /home/ansible/nodejs
+        chdir: /home/ahmedalaa/ansible/nodejs
         cmd: node app.js
       async: 1000
       poll: 0
