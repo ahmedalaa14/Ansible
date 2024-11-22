@@ -6,7 +6,7 @@
   - name: Install nginx server
     apt:
       name: nginx= 1.18.0-0ubuntu1
-      state: latest
+      state: present
 
   - name: Start nginx server
     service:

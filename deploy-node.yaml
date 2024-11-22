@@ -1,0 +1,45 @@
+---
+
+- name: Install ndoe and npm
+  hosts: 159.89.1.54
+  tasks:
+    - name: Update apr repo and cache
+      apt: update_cache=yes force_apt_get=yes  cache_valid_time=3600 
+    
+    - name: Install nodejs and npm
+      apt: 
+        pkg:
+          - nodejs
+          - npm
+
+- name: Deploy nodejs app
+  hosts: 159.89.1.54
+  tasks:          
+    - name: Copy nodejs folder to a server
+      copy:
+        src: /home/Documents/nodejs-app.tgz
+        dest: /home/ansible/nodejs.tgz
+    - name : Unpack the nodejs tar file
+      unarchive:
+        src: /home/ansible/nodejs.tgz
+        dest: /home/ansible/nodejs
+        reomote_src: yes
+    - name: Install dependencies
+      npm:
+        path: /home/ansible/nodejs/package
+    - name: Start the application
+      command:
+        chdir: /home/ansible/nodejs
+        cmd: node app.js
+      async: 1000
+      poll: 0
+    - name : Ensure the app is running
+      shell: ps aux | grep node 
+      register: app_status
+    - debug: msg= {{app_status.stdout_lines}}
+
+    
+
+
+
+      
