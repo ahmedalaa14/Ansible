@@ -37,7 +37,7 @@
   tasks: 
     - name: Create new linux user
       ansible.builtin.user:
-        name: nana
+        name: ahmedalaa
         groups: adm,docker
 
 
